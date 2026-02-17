@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahoreda - Messages</title>
+  <link rel="stylesheet" href="messages.css">
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <header class="top-nav">
+    <div class="brand">
+      <div class="logo">A</div>
+      <span class="brand-name">Ahoreda</span>
+    </div>
+    <div class="top-right-menu">
+
+  <!-- Call Buttons -->
+  <button id="voiceCallBtn" class="call-btn">📞</button>
+  <button id="videoCallBtn" class="call-btn">🎥</button>
+
+  <!-- 3 dots menu -->
+  <button id="menuBtn">⋮</button>
+  <div id="menuDropdown" class="dropdown-content">
+    <button onclick="logout()">Logout</button>
+    <button onclick="openSettings()">Settings</button>
+  </div>
+</div>
+   </header>
+   
+  <!-- CHAT AREA -->
+  <main class="chat-area">
+
+    <!-- Chat messages -->
+    <div id="chatMessages">
+      <p class="empty-chat">Start a conversation</p>
+    </div>
+
+    <!-- Message input -->
+    <div class="chat-input-container">
+      <button id="attachBtn" class="big-attach">+</button>
+      <input type="text" id="chatInput" placeholder="Type your message...">
+      <button id="micBtn" class="transparent-btn">🎤</button>
+      <button id="sendBtn">Send</button>
+      <input type="file" id="fileInput" style="display:none;" multiple>
+    </div>
+
+  </main>
+
+  <script src="messages.js"></script>
+</body>
+</html>

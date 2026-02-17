@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahoreda - Feed</title>
+  <link rel="stylesheet" href="feed.css" />
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <header class="top-nav">
+    <div class="brand">
+      <div class="logo">C</div>
+      <span class="brand-name">Ahoreda</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-btn active" onclick="switchTab('home')" id="nav-home">Home</button>
+      <button class="nav-btn" onclick="window.location.href='explore.html'">Explore</button>
+      <button class="nav-btn" onclick="window.location.href='messages.html'" id="nav-messages">Messages</button>
+      <button class="nav-btn" onclick="window.location.href='notifications.html'">Notifications</button>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="three-dots" onclick="toggleUserMenu()">⋮</div>
+      <div class="user-menu hidden" id="userMenu">
+        <div onclick="goToSettings()">Settings</div>
+        <div onclick="logout()">Logout</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="layout">
+
+    <!-- CENTER FEED -->
+    <section class="main-feed">
+
+      <!-- CREATE POST -->
+      <div class="card create-post">
+        <h3>Create Post</h3>
+        <textarea id="postText" placeholder="What's on your mind?"></textarea>
+        <div class="post-actions">
+          <button onclick="createPost()">Post</button>
+        </div>
+      </div>
+
+      <!-- POSTS -->
+      <div id="postsArea"></div>
+
+    </section>
+
+    <!-- RIGHT SIDE PANEL -->
+    <aside class="side-panel">
+      <div class="card">
+        <h3>Trending</h3>
+        <ul class="simple-list">
+          <li>#Ghana</li>
+          <li>#Tech</li>
+          <li>#IslamicLifestyle</li>
+          <li>#Education</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Suggested Friends</h3>
+        <div class="suggested">
+          <div class="suggest-user">
+            <div class="avatar"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="profile"></div>
+            <div>
+              <div class="name">Amina Yakubu</div>
+              <div class="meta">Ghana</div>
+            </div>
+            <button class="follow-btn">Follow</button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script src="feed.js"></script>
+</body>
+</html>

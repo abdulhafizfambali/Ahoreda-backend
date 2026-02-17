@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahoreda Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+
+<body class="admin-body">
+
+  <!-- Top Bar -->
+  <header class="admin-topbar">
+    <div class="admin-brand">
+      <span class="admin-logo">Ahoreda</span>
+      <span class="admin-subtitle">Admin Dashboard</span>
+    </div>
+
+    <div class="admin-top-actions">
+      <button class="admin-btn-outline" onclick="goBackToFeed()">Go to Feed</button>
+      <button class="admin-btn-danger" onclick="adminLogout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Layout -->
+  <main class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <button class="admin-nav-item active" onclick="showAdminTab('overview')">Overview</button>
+      <button class="admin-nav-item" onclick="showAdminTab('users')">Users</button>
+      <button class="admin-nav-item" onclick="showAdminTab('demographics')">Demographics</button>
+      <button class="admin-nav-item" onclick="showAdminTab('moderation')">Moderation</button>
+      <button class="admin-nav-item" onclick="showAdminTab('ads')">Halal Ads</button>
+      <button class="admin-nav-item" onclick="showAdminTab('settings')">Settings</button>
+    </aside>
+
+    <!-- Content -->
+    <section class="admin-content">
+
+      <!-- OVERVIEW -->
+      <div class="admin-tab" id="tab-overview">
+
+        <h1 class="admin-title">Overview</h1>
+
+        <div class="admin-cards-grid">
+          <div class="admin-card">
+            <div class="admin-card-label">Total Users</div>
+            <div class="admin-card-value" id="totalUsers">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">Online Now</div>
+            <div class="admin-card-value" id="onlineNow">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">New Users Today</div>
+            <div class="admin-card-value" id="newUsersToday">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">Posts Today</div>
+            <div class="admin-card-value" id="postsToday">0</div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h2 class="admin-section-title">Quick Notes</h2>
+          <p class="admin-text">
+            This is the front-end dashboard. Later, Firebase will supply real statistics.
+            For now, I am using demo data to design everything perfectly.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- USERS -->
+<div class="admin-tab hidden" id="tab-users">
+
+  <h1 class="admin-title">Users</h1>
+
+  <!-- Filters -->
+  <div class="admin-section">
+    <h2 class="admin-section-title">Search & Filters</h2>
+
+    <div class="admin-filters">
+      <input id="userSearchInput" class="admin-input" placeholder="Search by name..." />
+
+      <select id="genderFilter" class="admin-select">
+        <option value="All">All Genders</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <select id="statusFilter" class="admin-select">
+        <option value="All">All Status</option>
+        <option value="Online">Online</option>
+        <option value="Offline">Offline</option>
+      </select>
+
+      <select id="nationalityFilter" class="admin-select">
+        <option value="All">All Nationalities</option>
+      </select>
+
+      <button class="admin-btn-outline" onclick="resetUserFilters()">Reset</button>
+    </div>
+
+    <p class="admin-text" style="margin-top: 10px;">
+      Results: <b id="usersCount">0</b>
+    </p>
+  </div>
+
+  <!-- Users Table -->
+  <div class="admin-section">
+    <h2 class="admin-section-title">Recent Users</h2>
+
+    <div class="admin-table">
+      <div class="admin-table-row admin-table-header">
+        <div>Name</div>
+        <div>Gender</div>
+        <div>Age</div>
+        <div>Nationality</div>
+        <div>Status</div>
+      </div>
+
+      <div id="usersTable"></div>
+    </div>
+  </div>
+
+</div>
+
+      <!-- DEMOGRAPHICS -->
+      <div class="admin-tab hidden" id="tab-demographics">
+
+        <h1 class="admin-title">Demographics</h1>
+
+        <div class="admin-section">
+          <h2 class="admin-section-title">Gender Breakdown</h2>
+
+          <div class="admin-progress-wrap">
+            <div class="admin-progress-label">
+              <span>Male</span>
+              <span id="malePercent">0%</span>
+            </div>
+            <div class="admin-progress">
+              <div class="admin-progress-fill" id="maleBar"></div>
+            </div>
+
+            <div class="admin-progress-label">
+              <span>Female</span>
+              <span id="femalePercent">0%</span>
+            </div>
+            <div class="admin-progress">
+              <div class="admin-progress-fill" id="femaleBar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h2 class="admin-section-title">Top Nationalities</h2>
+          <div id="nationalityList" class="admin-list"></div>
+        </div>
+
+      </div>
+
+      <!-- MODERATION -->
+      <div class="admin-tab hidden" id="tab-moderation">
+
+        <h1 class="admin-title">Moderation</h1>
+
+        <div class="admin-cards-grid">
+          <div class="admin-card">
+            <div class="admin-card-label">Flagged Posts</div>
+            <div class="admin-card-value" id="flaggedPosts">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">Blocked Posts</div>
+            <div class="admin-card-value" id="blockedPosts">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">Blocked Words Triggered</div>
+            <div class="admin-card-value" id="blockedWordsTriggered">0</div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h2 class="admin-section-title">Blocked Words List</h2>
+
+          <div class="admin-row">
+            <input id="newBlockedWord" class="admin-input" placeholder="Enter word to block..." />
+            <button class="admin-btn" onclick="addBlockedWord()">Add</button>
+          </div>
+
+          <div id="blockedWordsList" class="admin-tag-list"></div>
+        </div>
+
+      </div>
+
+      <!-- ADS -->
+      <div class="admin-tab hidden" id="tab-ads">
+
+        <h1 class="admin-title">Halal Ads</h1>
+
+        <div class="admin-cards-grid">
+          <div class="admin-card">
+            <div class="admin-card-label">Ads Running</div>
+            <div class="admin-card-value" id="adsRunning">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">Impressions Today</div>
+            <div class="admin-card-value" id="impressionsToday">0</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-label">Clicks Today</div>
+            <div class="admin-card-value" id="clicksToday">0</div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h2 class="admin-section-title">Ad Policy</h2>
+          <p class="admin-text">
+            Ahoreda will only show halal ads approved by the admin.
+            No music-related promotions. No gambling. No alcohol. No adult content.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="admin-tab hidden" id="tab-settings">
+
+        <h1 class="admin-title">Settings</h1>
+
+        <div class="admin-section">
+          <h2 class="admin-section-title">Admin Notes</h2>
+          <p class="admin-text">
+            Later (Insha Allah) I will add:
+            <br>- Admin account login
+            <br>- Real-time user online tracking
+            <br>- Export reports (CSV)
+            <br>- Moderation AI
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

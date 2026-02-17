@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahoreda Social Media</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"/>
+</head>
+<body>
+
+<div id="time-display"></div>
+
+<div class="container" id="auth-container">
+ <h1>Welcome to Ahoreda!</h1>
+  <h1 id="signup-title">Sign Up</h1>
+
+  <div class="form-step active" id="step-1">
+    <div class="back-arrow" style="display:none;" onclick="prevStep()">←</div>
+    <div class="form-group"><label>First Name</label><input type="text" id="firstName"><div class="error-message" id="error-firstName">Please enter a valid first name</div></div>
+    <div class="form-group"><label>Last Name</label><input type="text" id="lastName"><div class="error-message" id="error-lastName">Please enter a valid last name</div></div>
+    <button onclick="nextStep()">Next</button>
+    <div class="switch-login" id="login-prompt">Already have an account? Login</div>
+  </div>
+
+  <!-- LOGIN STEP (hidden by default) -->
+<div class="form-step" id="login-step">
+  <h1>Login</h1>
+
+  <div class="form-group">
+    <label>Email / Phone</label>
+    <input type="text" id="loginEmail">
+    <div class="error-message" id="error-loginEmail">
+      Please enter email or phone
+    </div>
+  </div>
+
+  <div class="form-group">
+  <label>Password</label>
+
+  <div style="position:relative;">
+    <input type="password" id="loginPassword" style="padding-right:45px;">
+    <span onclick="togglePassword('loginPassword')" 
+      style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+      👁
+    </span>
+  </div>
+
+  <div class="error-message" id="error-loginPassword">
+    Password required
+  </div>
+</div>
+
+  <button onclick="login()">Login</button>
+
+  <!-- Go back to signup -->
+  <div class="switch-login" onclick="backToSignup()">
+    Don't have an account? Sign Up
+  </div>
+</div>
+
+
+  <div class="form-step" id="step-2">
+    <div class="back-arrow" onclick="prevStep()">←</div>
+    <div class="form-group">
+      <label>Date of Birth (DD/MM/YYYY)</label>
+      <div class="dob-group">
+        <input type="text" id="dob-day" maxlength="2" inputmode="numeric" placeholder="DD" oninput="formatDOB()">
+        <input type="text" id="dob-month" maxlength="2" inputmode="numeric" placeholder="MM" oninput="formatDOB()">
+        <input type="text" id="dob-year" maxlength="4" inputmode="numeric" placeholder="YYYY" oninput="formatDOB()">
+      </div>
+      <div class="error-message" id="error-dob">Invalid date</div>
+    </div>
+    <div class="form-group">
+      <label>Gender</label>
+      <select id="gender">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        
+      </select>
+      <div class="error-message" id="error-gender">Select a gender</div>
+    </div>
+    <button onclick="nextStep()">Next</button>
+  </div>
+
+  <div class="form-step" id="step-3">
+    <div class="back-arrow" onclick="prevStep()">←</div>
+    <div class="form-group">
+  <label>Country</label>
+
+
+  <!-- Country dropdown -->
+  <select id="country">
+    <option value="" disabled selected>Select Country</option>
+  </select>
+
+  <div class="error-message" id="error-country">Select a country</div>
+</div>
+    <button onclick="nextStep()">Next</button>
+  </div>
+
+  <div class="form-step" id="step-4">
+  <div class="back-arrow" onclick="prevStep()">←</div>
+
+  <div class="form-group">
+    <label>Email / Phone</label>
+    <input type="text" id="emailPhone">
+    <div class="error-message" id="error-emailPhone">Invalid email or phone</div>
+  </div>
+
+  <!-- Password -->
+  <div class="form-group">
+    <label>Password</label>
+
+    <div style="position:relative;">
+      <input type="password" id="password" style="padding-right:45px;">
+      <span onclick="togglePassword('password')" 
+        style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+        👁
+      </span>
+    </div>
+
+    <div class="error-message" id="error-password">Password required</div>
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="form-group">
+    <label>Confirm Password</label>
+
+    <div style="position:relative;">
+      <input type="password" id="confirmPassword" style="padding-right:45px;">
+      <span onclick="togglePassword('confirmPassword')" 
+        style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+        👁
+      </span>
+    </div>
+
+    <div class="error-message" id="error-confirmPassword">Confirm your password</div>
+  </div>
+
+  <button onclick="nextStep()">Next</button>
+</div>
+
+<!-- NEW STEP 5: Confirmation Code -->
+<div class="form-step" id="step-5">
+  <div class="back-arrow" onclick="prevStep()">←</div>
+  
+  <h2 class="step-title">Confirm Your Account</h2>
+  
+  <p class="step-instruction">A confirmation code has been sent to your email or phone.</p>
+  
+  <div class="form-group">
+    <label>Enter Confirmation Code</label>
+    <input type="text" id="confirmationCode" maxlength="6" placeholder="Enter 6-digit code">
+    <div class="error-message" id="error-confirmationCode">Invalid code</div>
+  </div>
+  
+  <button onclick="verifyConfirmationCode()">Verify</button>
+  
+  <p class="resend-code-text" onclick="resendCode()">Resend Code</p>
+</div>
+
+
+  <div class="form-step" id="step-6">
+    <div class="back-arrow" onclick="prevStep()">←</div>
+    <div id="avatar-container" onclick="uploadAvatar()">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="avatar">
+      <span>Add profile photo</span>
+      <input type="file" id="profilePhoto" accept="image/*" onchange="openCropModal(event)">
+    </div>
+    <button onclick="finishSignup()">Done</button>
+  </div>
+</div>
+
+<div id="crop-modal">
+  <div id="crop-container">
+    <canvas id="crop-canvas" width="300" height="300"></canvas>
+    <div id="crop-buttons">
+      <button onclick="applyCrop()">Crop</button>
+      <button onclick="closeCropModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

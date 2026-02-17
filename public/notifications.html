@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahoreda - Notifications</title>
+  <link rel="stylesheet" href="notifications.css" />
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <header class="top-nav">
+    <div class="brand" onclick="window.location.href='feed.html'">
+      <div class="logo">A</div>
+      <span class="brand-name">Ahoreda</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="window.location.href='feed.html'">Home</button>
+      <button class="nav-btn" onclick="window.location.href='explore.html'">Explore</button>
+      <button class="nav-btn" onclick="window.location.href='messages.html'">Messages</button>
+      <button class="nav-btn active">Notifications</button>
+    </nav>
+
+    <!-- 3 DOTS MENU -->
+    <div class="top-right-menu">
+      <button id="menuBtn" class="menu-btn">⋮</button>
+
+      <div id="menuDropdown" class="dropdown-content">
+        <button onclick="window.location.href='settings.html'">Settings</button>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="page">
+
+    <div class="page-header">
+      <div>
+        <h2>Notifications 🔔</h2>
+        <p class="subtext">Your activity updates will appear here.</p>
+      </div>
+
+      <button class="clear-btn" onclick="clearNotifications()">Clear all</button>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+      <button class="tab active" onclick="setFilter('all')" id="tab-all">All</button>
+      <button class="tab" onclick="setFilter('likes')" id="tab-likes">Likes</button>
+      <button class="tab" onclick="setFilter('mentions')" id="tab-mentions">Mentions</button>
+      <button class="tab" onclick="setFilter('follows')" id="tab-follows">Follows</button>
+    </div>
+
+    <!-- NOTIFICATIONS LIST -->
+    <section id="notificationsList" class="notif-list"></section>
+
+  </main>
+
+  <script src="notifications.js"></script>
+</body>
+</html>

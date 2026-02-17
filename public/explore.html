@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahoreda - Explore</title>
+  <link rel="stylesheet" href="explore.css" />
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <header class="top-nav">
+    <div class="brand" onclick="window.location.href='feed.html'">
+      <div class="logo">A</div>
+      <span class="brand-name">Ahoreda</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="window.location.href='feed.html'">Home</button>
+      <button class="nav-btn active">Explore</button>
+      <button class="nav-btn" onclick="window.location.href='messages.html'">Messages</button>
+      <button class="nav-btn" onclick="window.location.href='notifications.html'">Notifications</button>
+    </nav>
+
+    <!-- 3 DOTS MENU -->
+    <div class="top-right-menu">
+      <button id="menuBtn" class="menu-btn">⋮</button>
+
+      <div id="menuDropdown" class="dropdown-content">
+        <button onclick="window.location.href='settings.html'">Settings</button>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="page">
+
+    <!-- SEARCH -->
+    <section class="search-area">
+      <h2>Explore 🔎</h2>
+      <p class="subtext">Search posts, people, and trending topics.</p>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search Ahoreda..." />
+        <button id="searchBtn">Search</button>
+      </div>
+    </section>
+
+    <!-- TRENDING TOPICS -->
+    <section class="card">
+      <div class="card-title">Trending Topics</div>
+
+      <div class="topics" id="topicsList">
+        <!-- JS inserts -->
+      </div>
+    </section>
+
+    <!-- SUGGESTED USERS -->
+    <section class="card">
+      <div class="card-title">Suggested Users</div>
+
+      <div class="users" id="usersList">
+        <!-- JS inserts -->
+      </div>
+    </section>
+
+    <!-- EXPLORE POSTS GRID -->
+    <section class="card">
+      <div class="card-title">Explore Posts</div>
+
+      <div class="posts-grid" id="postsGrid">
+        <!-- JS inserts -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="explore.js"></script>
+</body>
+</html>
