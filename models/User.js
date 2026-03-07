@@ -11,9 +11,8 @@ const UserSchema = new mongoose.Schema({
   gender: { type: String, required: true },
   country: { type: String, required: true },
   emailPhone: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  avatar: { type: String, default: "" }, // base64 or URL
-  createdAt: { type: Date, default: Date.now }
-});
+  password: { type: String, required: true }, // In real apps, hash this
+  avatar: { type: String, default: "" } // base64 or URL
+}, { timestamps: true });
 
 module.exports = mongoose.model("User", UserSchema);
