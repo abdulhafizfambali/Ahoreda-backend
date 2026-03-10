@@ -22,7 +22,6 @@ measurementId:"G-G49EJMNFMM"
 };
 
 initializeApp(firebaseConfig);
-
 console.log("Ahoreda Firebase is successfully connected");
 </script>
 
@@ -37,19 +36,21 @@ console.log("Ahoreda Firebase is successfully connected");
 <h1>Welcome to Ahoreda!</h1>
 <h1 id="signup-title">Sign Up</h1>
 
+
+<!-- STEP 1 -->
 <div class="form-step active" id="step-1">
 
 <div class="back-arrow" style="display:none;" onclick="prevStep()">←</div>
 
 <div class="form-group">
 <label>First Name</label>
-<input type="text" id="firstName">
+<input type="text" id="firstName" autocomplete="given-name">
 <div class="error-message" id="error-firstName">Please enter a valid first name</div>
 </div>
 
 <div class="form-group">
 <label>Last Name</label>
-<input type="text" id="lastName">
+<input type="text" id="lastName" autocomplete="family-name">
 <div class="error-message" id="error-lastName">Please enter a valid last name</div>
 </div>
 
@@ -61,12 +62,14 @@ Already have an account? Login
 
 </div>
 
+
+<!-- LOGIN -->
 <div class="form-step" id="login-step">
 
 <h1>Login</h1>
 
 <div class="form-group">
-<label>Email / Phone</label>
+<label>Email or Phone</label>
 <input type="text" id="loginEmail">
 <div class="error-message" id="error-loginEmail">
 Please enter email or phone
@@ -81,7 +84,8 @@ Please enter email or phone
 
 <input type="password" id="loginPassword" style="padding-right:45px;">
 
-<span onclick="togglePassword('loginPassword')" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+<span onclick="togglePassword('loginPassword')" 
+style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
 👁
 </span>
 
@@ -101,6 +105,8 @@ Don't have an account? Sign Up
 
 </div>
 
+
+<!-- STEP 2 -->
 <div class="form-step" id="step-2">
 
 <div class="back-arrow" onclick="prevStep()">←</div>
@@ -144,6 +150,8 @@ Select a gender
 
 </div>
 
+
+<!-- STEP 3 -->
 <div class="form-step" id="step-3">
 
 <div class="back-arrow" onclick="prevStep()">←</div>
@@ -166,6 +174,8 @@ Select a country
 
 </div>
 
+
+<!-- STEP 4 -->
 <div class="form-step" id="step-4">
 
 <div class="back-arrow" onclick="prevStep()">←</div>
@@ -190,7 +200,8 @@ Invalid email or phone
 
 <input type="password" id="password" style="padding-right:45px;">
 
-<span onclick="togglePassword('password')" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+<span onclick="togglePassword('password')" 
+style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
 👁
 </span>
 
@@ -210,7 +221,8 @@ Password required
 
 <input type="password" id="confirmPassword" style="padding-right:45px;">
 
-<span onclick="togglePassword('confirmPassword')" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+<span onclick="togglePassword('confirmPassword')" 
+style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
 👁
 </span>
 
@@ -226,37 +238,9 @@ Confirm your password
 
 </div>
 
+
+<!-- STEP 5 (FINAL STEP - PHOTO) -->
 <div class="form-step" id="step-5">
-
-<div class="back-arrow" onclick="prevStep()">←</div>
-
-<h2 class="step-title">Confirm Your Account</h2>
-
-<p class="step-instruction">
-A confirmation code has been sent to your email or phone.
-</p>
-
-<div class="form-group">
-
-<label>Enter Confirmation Code</label>
-
-<input type="text" id="confirmationCode" maxlength="6" placeholder="Enter 6-digit code">
-
-<div class="error-message" id="error-confirmationCode">
-Invalid code
-</div>
-
-</div>
-
-<button onclick="verifyConfirmationCode()">Verify</button>
-
-<p class="resend-code-text" onclick="resendCode()">
-Resend Code
-</p>
-
-</div>
-
-<div class="form-step" id="step-6">
 
 <div class="back-arrow" onclick="prevStep()">←</div>
 
@@ -276,6 +260,8 @@ Resend Code
 
 </div>
 
+
+<!-- IMAGE CROP MODAL -->
 <div id="crop-modal">
 
 <div id="crop-container">
@@ -285,7 +271,6 @@ Resend Code
 <div id="crop-buttons">
 
 <button onclick="applyCrop()">Crop</button>
-
 <button onclick="closeCropModal()">Cancel</button>
 
 </div>
