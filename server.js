@@ -6,6 +6,14 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -78,14 +86,16 @@ app.get("/api/test", (req, res) => {
 /* ===============================
    SEND VERIFICATION CODE
 ================================ */
-app.post("/api/users/send-code", (req, res) => {
+app.post("/api/users/send-code", async (req, res) => {
+
   try {
+
     const { emailPhone } = req.body;
 
     if (!emailPhone) {
       return res.json({
-        success: false,
-        message: "Email or phone required"
+        success:false,
+        message:"Email or phone required"
       });
     }
 
@@ -93,14 +103,41 @@ app.post("/api/users/send-code", (req, res) => {
 
     verificationStore[emailPhone] = code;
 
-    console.log("Verification code:", code);
+    const message =
+      `Your Ahoreda confirmation code is ${code}. Please, do not share it with anyone.`;
 
-    res.json({ success: true });
+    if(emailPhone.includes("@")){
 
-  } catch (err) {
+      await transporter.sendMail({
+        from: '"Ahoreda" <no-reply@ahoreda.com>',
+        to: emailPhone,
+        subject: "Ahoreda Confirmation Code",
+        text: message
+      });
+
+    }else{
+
+      await smsClient.messages.create({
+        body: message,
+        from: process.env.TWILIO_PHONE,
+        to: emailPhone
+      });
+
+    }
+
+    res.json({success:true});
+
+  } catch(err){
+
     console.error(err);
-    res.json({ success: false });
+
+    res.json({
+      success:false,
+      message:"Failed to send code"
+    });
+
   }
+
 });
 
 /* ===============================
