@@ -16,18 +16,21 @@ const dropdownContent = document.getElementById("menuDropdown");
 const emptyChatText = document.querySelector(".empty-chat");
 
 // SHOW/HIDE MENU DROPDOWN
-menuBtn.addEventListener("click", () => {
-  dropdownContent.style.display =
-    dropdownContent.style.display === "flex" ? "none" : "flex";
-});
+if(menuBtn && dropdownContent){
+  menuBtn.addEventListener("click", () => {
+    dropdownContent.style.display =
+      dropdownContent.style.display === "flex" ? "none" : "flex";
+  });
+}
 
 // HIDE DROPDOWN WHEN CLICKING OUTSIDE
 document.addEventListener("click", (e) => {
-  if (!menuBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
-    dropdownContent.style.display = "none";
+  if(menuBtn && dropdownContent){
+    if (!menuBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+      dropdownContent.style.display = "none";
+    }
   }
 });
-
 // HIDE "Start a conversation" WHEN USER TYPES
 chatInput.addEventListener("input", () => {
   if (chatInput.value.trim().length > 0) {
@@ -41,22 +44,36 @@ chatInput.addEventListener("input", () => {
 });
 
 // SEND TEXT MESSAGE
-sendBtn.addEventListener("click", () => {
+sendBtn.addEventListener("click", async () => {
+
   const message = chatInput.value.trim();
   if (!message) return;
 
-  // Remove empty text
-  if (emptyChatText) emptyChatText.style.display = "none";
+  try {
 
-  addMessage(message, "user");
-  chatInput.value = "";
-  scrollToBottom();
+    const res = await fetch("/api/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: message
+      })
+    });
 
-  // Demo reply
-  setTimeout(() => {
-    addMessage("This is a demo reply.", "friend");
-    scrollToBottom();
-  }, 800);
+    const data = await res.json();
+
+    if(data.success){
+      addMessage(message, "user");
+      chatInput.value = "";
+      scrollToBottom();
+    }
+
+  } catch(err){
+    console.error(err);
+    alert("Failed to send message. Please try again.");
+  }
+
 });
 
 // ENTER KEY SEND
@@ -191,9 +208,28 @@ micBtn.addEventListener('click', async () => {
   }
 });
 
-voiceCallBtn.addEventListener("click", () => {
-  alert("📞 Voice call feature coming soon (WebRTC needed).");
-});
+// LOAD MESSAGES FROM BACKEND
+async function loadMessages(){
 
-videoCallBtn.addEventListener("click", () => {
-  alert("🎥 Video call feature coming soon (WebRTC needed).");
+  try{
+
+    const res = await fetch("/api/messages");
+    const messages = await res.json();
+
+    messages.forEach(msg=>{
+      addMessage(msg.text,"friend");
+    });
+
+  }catch(err){
+    console.error(err);
+  }
+
+}
+
+videoCallBtn.onclick = () => {
+  window.open("call.html?type=video", "_blank");
+};
+
+voiceCallBtn.onclick = () => {
+  window.open("call.html?type=voice", "_blank");
+};

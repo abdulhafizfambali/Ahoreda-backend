@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+}
+
+/* MAIN SCREEN */
+.call-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* HEADER */
+.call-header {
+  text-align: center;
+}
+
+/* VIDEO */
+.video-area {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* SMALL VIDEO */
+.small-video {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  bottom: 20px;
+  right: 20px;
+  border: 2px solid white;
+}
+
+/* VOICE UI */
+.voice-ui {
+  display: none;
+  text-align: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  background: url('https://i.pravatar.cc/300') center/cover;
+  border-radius: 50%;
+  margin: auto;
+  box-shadow: 0 0 20px #22c55e;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.controls button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.end {
+  background: red;
+  color: white;
+}

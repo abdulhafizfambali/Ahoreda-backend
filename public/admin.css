@@ -267,12 +267,12 @@
 }
 
 .status-online {
-  color: #86efac;
+  color: #0112f5;
   font-weight: 800;
 }
 
 .status-offline {
-  color: #fca5a5;
+  color: #c8c5c5;
   font-weight: 800;
 }
 
@@ -950,4 +950,5 @@
   padding: 16px;
   color: rgba(255, 255, 255, 0.65);
   font-weight: 650;
+}
 }

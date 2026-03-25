@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 /* ===============================
    FILE UPLOAD CONFIG
@@ -94,8 +94,8 @@ app.post("/api/users/send-code", async (req, res) => {
 
     if (!emailPhone) {
       return res.json({
-        success:false,
-        message:"Email or phone required"
+        success: false,
+        message: "Email or phone required"
       });
     }
 
@@ -106,7 +106,7 @@ app.post("/api/users/send-code", async (req, res) => {
     const message =
       `Your Ahoreda confirmation code is ${code}. Please, do not share it with anyone.`;
 
-    if(emailPhone.includes("@")){
+    if (emailPhone.includes("@")) {
 
       await transporter.sendMail({
         from: '"Ahoreda" <no-reply@ahoreda.com>',
@@ -115,7 +115,7 @@ app.post("/api/users/send-code", async (req, res) => {
         text: message
       });
 
-    }else{
+    } else {
 
       await smsClient.messages.create({
         body: message,
@@ -125,15 +125,15 @@ app.post("/api/users/send-code", async (req, res) => {
 
     }
 
-    res.json({success:true});
+    res.json({ success: true });
 
-  } catch(err){
+  } catch (err) {
 
     console.error(err);
 
     res.json({
-      success:false,
-      message:"Failed to send code"
+      success: false,
+      message: "Failed to send code"
     });
 
   }
@@ -175,45 +175,45 @@ app.post("/api/users/signup", upload.single("avatar"), async (req, res) => {
 
     if (!firstName || !lastName || !emailPhone || !password) {
       return res.json({
-        success:false,
-        message:"All fields required"
+        success: false,
+        message: "All fields required"
       });
     }
 
     const existingUser = await User.findOne({ emailPhone });
 
-    if(existingUser){
+    if (existingUser) {
       return res.json({
-        success:false,
-        message:"User already exists"
+        success: false,
+        message: "User already exists"
       });
     }
 
     let avatarBase64 = null;
 
-    if(req.file){
+    if (req.file) {
       avatarBase64 = req.file.buffer.toString("base64");
     }
 
-    const hashedPassword = await bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
       firstName,
       lastName,
       emailPhone,
-      password:hashedPassword,
-      avatar:avatarBase64
+      password: hashedPassword,
+      avatar: avatarBase64
     });
 
     await user.save();
 
-    res.json({success:true});
+    res.json({ success: true });
 
-  } catch(err){
+  } catch (err) {
     console.error(err);
     res.status(500).json({
-      success:false,
-      message:"Server error"
+      success: false,
+      message: "Server error"
     });
   }
 });
@@ -358,18 +358,30 @@ app.post("/api/posts", authenticateToken, async (req, res) => {
 /* ===============================
    MESSAGES
 ================================ */
-app.get("/api/messages", async (req, res) => {
+app.post("/api/messages", async (req, res) => {
+
   try {
 
-    const messages = await Message.find().sort({ createdAt: 1 });
+    const { text } = req.body;
 
-    res.json(messages);
+    if (!text) {
+      return res.json({ success: false });
+    }
 
-  } catch {
-    res.status(500).json({
-      message: "Server error"
+    const message = new Message({
+      text: text,
+      createdAt: new Date()
     });
+
+    await message.save();
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false });
   }
+
 });
 
 /* ===============================
@@ -395,11 +407,43 @@ mongoose
 
     console.log("MongoDB connected ✅");
 
-    app.listen(PORT, () => {
-      console.log(`Server running on https://ahoreda-backend.onrender.com`);
-    });
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
   })
   .catch(err => {
     console.log("MongoDB error ❌", err);
   });
+
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app); // ⚠️ use your existing express app
+
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
+
+io.on("connection", (socket) => {
+
+  console.log("User connected:", socket.id);
+
+  socket.on("join", (room) => {
+    socket.join(room);
+  });
+
+  socket.on("offer", (data) => {
+    socket.to(data.room).emit("offer", data.offer);
+  });
+
+  socket.on("answer", (data) => {
+    socket.to(data.room).emit("answer", data.answer);
+  });
+
+  socket.on("ice-candidate", (data) => {
+    socket.to(data.room).emit("ice-candidate", data.candidate);
+  });
+
+});

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call</title>
+  <link rel="stylesheet" href="call.css">
+</head>
+<body>
+
+<!-- Add in your call.html -->
+<audio id="callingTone" loop>
+  <source src="sounds/neutral_beep.mp3" type="audio/mp3">
+</audio>
+<div class="call-screen">
+
+  <!-- TOP -->
+  <div class="call-header">
+    <h2 id="callerName">Calling...</h2>
+    <span id="callTime">Call connected!</span>
+  </div>
+
+  <!-- VIDEO AREA -->
+  <div class="video-area">
+    <video id="remoteVideo" autoplay playsinline></video>
+    <video id="localVideo" autoplay muted playsinline class="small-video"></video>
+  </div>
+
+  <!-- VOICE AVATAR -->
+  <div class="voice-ui" id="voiceUI">
+    <div class="avatar"></div>
+    <h2>Anna Smith</h2>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="muteBtn">🔇</button>
+    <button id="endCallBtn" class="end">📞</button>
+    <button id="speakerBtn">🔊</button>
+  </div>
+
+</div>
+
+<script src="call.js"></script>
+</body>
+</html>

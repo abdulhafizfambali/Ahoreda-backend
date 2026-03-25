@@ -19,6 +19,7 @@ const topics = [
   "#Motivation",
   "#Health",
   "#Sports",
+  "#Life story of Abdul-Hafiz Fambali",
 ];
 
 const users = [
